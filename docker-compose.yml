@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  frontend:
+    build:
+      context: ./chatbot-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - chatbot-network
+
+  backend:
+    build:
+      context: ./chatbot-backend
+    ports:
+      - "5000:5000"
+    networks:
+      - chatbot-network
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+
+networks:
+  chatbot-network:
+    driver: bridge
